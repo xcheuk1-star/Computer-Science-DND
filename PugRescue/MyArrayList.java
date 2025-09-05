@@ -33,9 +33,13 @@ public class MyArrayList<E> {
 	}
 
 	/* Are there zero objects in the array list? */
-	// public boolean isEmpty() {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public boolean isEmpty() {
+		if (objectCount == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/* Get the index-th object in the list. */
 	public E get(int index) {
@@ -55,26 +59,49 @@ public class MyArrayList<E> {
 	/*
 	 * Returns true if this list contains an element equal to obj; otherwise returns false.
 	 */
-	// public boolean contains(E obj) {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public boolean contains(E obj) {
+		for (int i = 0; i < objectCount; i++) {
+			if (internalArray[i].equals(obj)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/* Insert an object at index */
 	// @SuppressWarnings("unchecked")
-	// public void add(int index, E obj) {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public void add(int index, E obj) {
+		/* ---- YOUR CODE HERE ---- */
+	}
 
 	/* Add an object to the end of the list; returns true */
 	/* ---- YOUR CODE HERE ---- */
-	// }@SuppressWarnings("unchecked")
-	// public boolean add(E obj) {
+	@SuppressWarnings("unchecked")
+	public boolean add(E obj) {
+		if (objectCount == internalArray.length - 1) {
+			E[] tempArray = (E[]) new Object[internalArray.length * 2];
+			for (int i = 0; i < internalArray.length; i++) {
+				tempArray[i] = internalArray[i];
+				tempArray[objectCount] = obj;
+				internalArray = tempArray;
+			}
+		} else {
+			internalArray[objectCount] = obj;
+		}
+		objectCount++;
+		return true;
+	}
 
 
 	// /* Remove the object at index and shift. Returns removed object. */
-	// public E remove(int index) {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public E remove(int index) {
+		E returned = internalArray[index];
+		for (int i = index; i < objectCount - 1; i++) {
+			internalArray[i] = internalArray[i + 1];
+		}
+		objectCount--;
+		return returned;
+	}
 
 	/*
 	 * Removes the first occurrence of the specified element from this list, if it is present. If
@@ -83,9 +110,18 @@ public class MyArrayList<E> {
 	 * element exists). Returns true if this list contained the specified element (or equivalently,
 	 * if this list changed as a result of the call).
 	 */
-	// public boolean remove(E obj) {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public boolean remove(E obj) {
+		for (int i = 0; i < objectCount; i++) {
+			if (internalArray[i].equals(obj)) {
+				for (int j = i; j < objectCount - 1; j++) {
+					internalArray[j] = internalArray[j + 1];
+				}
+				objectCount--;
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 	/*
@@ -93,8 +129,16 @@ public class MyArrayList<E> {
 	 * elements in the ArrayList. If the array is empty, it should return "[]". If there is one
 	 * element, "[X]", etc. Elements are separated by a comma and a space.
 	 */
-	// public String toString() {
-	// /* ---- YOUR CODE HERE ---- */
-	// }
+	public String toString() {
+		String finalString = "[";
+		for (int i = 0; i < objectCount; i++) {
+			finalString += internalArray[i].toString();
+			if (i != objectCount - 1) {
+				finalString += ", ";
+			}
+		}
+		finalString += "]";
+		return finalString;
+	}
 
 }
