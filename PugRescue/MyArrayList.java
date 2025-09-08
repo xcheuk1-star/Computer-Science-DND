@@ -71,24 +71,39 @@ public class MyArrayList<E> {
 	/* Insert an object at index */
 	// @SuppressWarnings("unchecked")
 	public void add(int index, E obj) {
-		/* ---- YOUR CODE HERE ---- */
-	}
+        if (index < 0 || index > objectCount) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + objectCount);
+        }
+        if (objectCount >= internalArray.length) {
+            E[] tempArray = (E[]) new Object[internalArray.length * 2];
+            for (int i = 0; i < internalArray.length; i++) {
+                tempArray[i] = internalArray[i];
+            }
+            internalArray = tempArray;
+        }
+        for (int i = objectCount; i > index; i--) {
+            internalArray[i] = internalArray[i - 1];
+        }
+        internalArray[index] = obj;
+        objectCount++;
+    }
 
 	/* Add an object to the end of the list; returns true */
 	/* ---- YOUR CODE HERE ---- */
 	@SuppressWarnings("unchecked")
 	public boolean add(E obj) {
-		if (objectCount == internalArray.length - 1) {
-			E[] tempArray = (E[]) new Object[internalArray.length * 2];
-			for (int i = 0; i < internalArray.length; i++) {
-				tempArray[i] = internalArray[i];
-				tempArray[objectCount] = obj;
-				internalArray = tempArray;
-			}
-		} else {
-			internalArray[objectCount] = obj;
-		}
-		objectCount++;
+		add (objectCount, obj);
+		// if (objectCount == internalArray.length - 1) {
+		// 	E[] tempArray = (E[]) new Object[internalArray.length * 2];
+		// 	for (int i = 0; i < internalArray.length; i++) {
+		// 		tempArray[i] = internalArray[i];
+		// 		tempArray[objectCount] = obj;
+		// 		internalArray = tempArray;
+		// 	}
+		// } else {
+		// 	internalArray[objectCount] = obj;
+		// }
+		// objectCount++;
 		return true;
 	}
 
