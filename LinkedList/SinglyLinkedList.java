@@ -13,8 +13,8 @@ public class SinglyLinkedList<E> {
 	// Constructor: creates a list that contains
 	// all elements from the array values, in the same order
 	public SinglyLinkedList(Object[] values) {
-		// this.head = null;
-		// this.tail = this.head;
+		this.head = null;
+		this.tail = this.head;
 		nodeCount = 0;
 		for (int i = 0; i < values.length; i++) {
 			add((E) (values[i]));
