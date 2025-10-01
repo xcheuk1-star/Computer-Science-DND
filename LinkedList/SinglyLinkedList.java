@@ -13,14 +13,12 @@ public class SinglyLinkedList<E> {
 	// Constructor: creates a list that contains
 	// all elements from the array values, in the same order
 	public SinglyLinkedList(Object[] values) {
-		this.head = null;
-		this.tail = this.head;
+		head = null;
+		tail = null;
 		nodeCount = 0;
 		for (int i = 0; i < values.length; i++) {
 			add((E) (values[i]));
 		}
-		// head = new ListNode<E>((E) values[0]);
-		// tail = new ListNode<E>((E) values[nodeCount - 1]);
 	}
 
 	public ListNode<E> getHead() {
@@ -48,7 +46,7 @@ public class SinglyLinkedList<E> {
 	// Returns true if this list contains an element equal to obj;
 	// otherwise returns false.
 	public boolean contains(E obj) {
-		for (ListNode<E> n = head; n.getNext() != null; n = n.getNext()) {
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
 			if (n.getValue().equals(obj)) {
 				return true;
 			}
@@ -60,7 +58,7 @@ public class SinglyLinkedList<E> {
 	// if not found, returns -1.
 	public int indexOf(E obj) {
 		int index = 0;
-		for (ListNode<E> n = head; n.getNext() != null; n = n.getNext()) {
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
 			if (n.getValue().equals(obj)) {
 				return index;
 			}
@@ -76,45 +74,101 @@ public class SinglyLinkedList<E> {
 			return false;
 		}
 		ListNode<E> tempAdd = new ListNode<E>(obj);
+		if (nodeCount == 0) {
+			head = tempAdd;
+			head.setNext(tail);
+			tail = tempAdd;
+			tail.setNext(null);
+		}
 		tail.setNext(tempAdd);
 		tail = tempAdd;
+		tail.setNext(null);
 		nodeCount++;
 		return true;
 	}
 
 	// Removes the first element that is equal to obj, if any.
 	// Returns true if successful; otherwise returns false.
-	// public boolean remove(E obj) {
-	// for (ListNode<E> n = head; n.getNext() != null; n = n.getNext()) {
-	// if (n.getValue().equals(obj)) {
-
-	// }
-	// }
+	public boolean remove(E obj) {
+		if (contains(obj)) {
+			remove(indexOf(obj));
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	// Returns the i-th element.
-	public E get(int i) {}
+	public E get(int i) {
+		if (i > nodeCount || i < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
+			if (indexOf(n.getValue()) == i) {
+				return n.getValue();
+			}
+		}
+		return null;
+	}
 
 	// Replaces the i-th element with obj and returns the old value.
-	public E set(int i, Object obj) {}
+	public E set(int i, Object obj) {
+		if (i > nodeCount - 1 || i < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
+			if (indexOf(n.getValue()) == i) {
+				E returned = n.getValue();
+				n.setValue((E) obj);
+				return returned;
+			}
+		}
+		return null;
+	}
 
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
-	public void add(int i, Object obj) {}
+	public void add(int i, Object obj) {
+		if (i > nodeCount - 1 || i < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		ListNode<E> tempAdd = new ListNode<E>((E) obj);
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
+			if (indexOf(n.getValue()) == i - 1) {
+				tempAdd.setNext(n.getNext());
+				n.setNext(tempAdd);
+			}
+		}
+	}
 
 	// Removes the i-th element and returns its value.
 	// Decrements the size of the list by one.
 	public E remove(int i) {
-
+		if (i > nodeCount - 1 || i < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		for (ListNode<E> n = head; n != null; n = n.getNext()) {
+			if (indexOf(n.getValue()) == i - 1) {
+				E returned = n.getNext().getValue();
+				n.setNext(n.getNext().getNext());
+				nodeCount--;
+				return returned;
+			}
+		}
+		return null;
 	}
 
 	// Returns a string representation of this list exactly like that for MyArrayList.
 	public String toString() {
-		String toReturn = "";
+		StringBuilder toReturn = new StringBuilder();
+		toReturn.append("[");
 		for (ListNode<E> n = head; n.getNext() != null; n = n.getNext()) {
-			toReturn += n.getValue().toString();
+			toReturn.append(n.getValue());
+			toReturn.append(", ");
 		}
-		return toReturn;
-
+		toReturn.append(tail.getValue());
+		toReturn.append("]");
+		return toReturn.toString();
 	}
 
 

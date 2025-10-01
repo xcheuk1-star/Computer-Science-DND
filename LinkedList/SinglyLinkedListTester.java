@@ -7,7 +7,9 @@ public class SinglyLinkedListTester {
         values[3] = "four";
         values[4] = "five";
         SinglyLinkedList<String> waller = new SinglyLinkedList<String>(values);
-        waller.toString();
+        System.out.println(waller.toString());
+        waller.add(3, "waller");
+        System.out.println(waller.toString());
     }
     
 }
