@@ -70,19 +70,17 @@ public class SinglyLinkedList<E> {
 	// Adds obj to this collection. Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-		if (obj.equals(null)) {
+		if (obj == null) {
 			return false;
 		}
 		ListNode<E> tempAdd = new ListNode<E>(obj);
 		if (nodeCount == 0) {
 			head = tempAdd;
-			head.setNext(tail);
 			tail = tempAdd;
-			tail.setNext(null);
+		} else {
+			tail.setNext(tempAdd);
+			tail = tempAdd;
 		}
-		tail.setNext(tempAdd);
-		tail = tempAdd;
-		tail.setNext(null);
 		nodeCount++;
 		return true;
 	}
@@ -147,11 +145,23 @@ public class SinglyLinkedList<E> {
 		if (i > nodeCount - 1 || i < 0) {
 			throw new IndexOutOfBoundsException();
 		}
+		if (i == 0) {
+			E returned = head.getValue();
+			head = head.getNext();
+			nodeCount--;
+			if (head == null) {
+				tail = null;
+			}
+			return returned;
+		}
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
 			if (indexOf(n.getValue()) == i - 1) {
 				E returned = n.getNext().getValue();
 				n.setNext(n.getNext().getNext());
 				nodeCount--;
+				if (n.getNext() == null) {
+					tail = n;
+				}
 				return returned;
 			}
 		}
