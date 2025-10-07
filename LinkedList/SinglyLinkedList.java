@@ -47,8 +47,14 @@ public class SinglyLinkedList<E> {
 	// otherwise returns false.
 	public boolean contains(E obj) {
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
-			if (n.getValue().equals(obj)) {
-				return true;
+			if (obj == null) {
+				if (n.getValue() == null) {
+					return true;
+				}
+			} else {
+				if (n.getValue().equals(obj)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -59,8 +65,14 @@ public class SinglyLinkedList<E> {
 	public int indexOf(E obj) {
 		int index = 0;
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
-			if (n.getValue().equals(obj)) {
-				return index;
+			if (obj == null) {
+				if (n.getValue() == null) {
+					return index;
+				}
+			} else {
+				if (n.getValue().equals(obj)) {
+					return index;
+				}
 			}
 			index++;
 		}
@@ -70,18 +82,7 @@ public class SinglyLinkedList<E> {
 	// Adds obj to this collection. Returns true if successful;
 	// otherwise returns false.
 	public boolean add(E obj) {
-		if (obj == null) {
-			return false;
-		}
-		ListNode<E> tempAdd = new ListNode<E>(obj);
-		if (nodeCount == 0) {
-			head = tempAdd;
-			tail = tempAdd;
-		} else {
-			tail.setNext(tempAdd);
-			tail = tempAdd;
-		}
-		nodeCount++;
+		add(nodeCount, obj);
 		return true;
 	}
 
@@ -98,7 +99,7 @@ public class SinglyLinkedList<E> {
 
 	// Returns the i-th element.
 	public E get(int i) {
-		if (i > nodeCount || i < 0) {
+		if (i >= nodeCount || i < 0) {
 			throw new IndexOutOfBoundsException();
 		}
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
@@ -111,7 +112,7 @@ public class SinglyLinkedList<E> {
 
 	// Replaces the i-th element with obj and returns the old value.
 	public E set(int i, Object obj) {
-		if (i > nodeCount - 1 || i < 0) {
+		if (i >= nodeCount || i < 0) {
 			throw new IndexOutOfBoundsException();
 		}
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
@@ -127,22 +128,36 @@ public class SinglyLinkedList<E> {
 	// Inserts obj to become the i-th element. Increments the size
 	// of the list by one.
 	public void add(int i, Object obj) {
-		if (i > nodeCount - 1 || i < 0) {
+		if (i > nodeCount || i < 0) {
 			throw new IndexOutOfBoundsException();
 		}
 		ListNode<E> tempAdd = new ListNode<E>((E) obj);
+		if (i == 0) {
+			tempAdd.setNext(head);
+			head = tempAdd;
+			if (nodeCount == 0) {
+				tail = tempAdd;
+			}
+			nodeCount++;
+			return;
+		}
+		int index = 0;
 		for (ListNode<E> n = head; n != null; n = n.getNext()) {
-			if (indexOf(n.getValue()) == i - 1) {
+			if (index == i - 1) {
 				tempAdd.setNext(n.getNext());
 				n.setNext(tempAdd);
+				if (tempAdd.getNext() == null) {
+					tail = tempAdd;
+				}
+				nodeCount++;
+				return;
 			}
+			index++;
 		}
 	}
 
-	// Removes the i-th element and returns its value.
-	// Decrements the size of the list by one.
 	public E remove(int i) {
-		if (i > nodeCount - 1 || i < 0) {
+		if (i >= nodeCount || i < 0) {
 			throw new IndexOutOfBoundsException();
 		}
 		if (i == 0) {
