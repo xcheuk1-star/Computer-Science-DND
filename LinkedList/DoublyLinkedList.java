@@ -110,7 +110,7 @@ public class DoublyLinkedList {
 			throw new IndexOutOfBoundsException();
 		}
 		if (nodeCount == 0) {
-			System.out.println("ts list is empty you can't get anything");
+			System.out.println("list is empty you can't get anything");
 		}
 		ListNode2<Nucleotide> n = SENTINEL.getNext();
 		for (int j = 0; j <= i; j++) {
@@ -128,7 +128,7 @@ public class DoublyLinkedList {
 			throw new IndexOutOfBoundsException();
 		}
 		if (nodeCount == 0) {
-			System.out.println("ts list is empty you cant set anything");
+			System.out.println("list is empty you cant set anything");
 		}
 		ListNode2<Nucleotide> n = SENTINEL.getNext();
 		for (int j = 0; j <= i; j++) {
@@ -168,6 +168,7 @@ public class DoublyLinkedList {
 			}
 			n = n.getNext();
 		}
+		nodeCount++;
 	}
 
 
@@ -176,7 +177,7 @@ public class DoublyLinkedList {
 	// Decrements the size of the list by one.
 	public Nucleotide remove(int i) {
 		if (nodeCount == 0) {
-			System.out.println("You are stupid the list is empty");
+			System.out.println("list is empty");
 		}
 		if (i >= nodeCount || i < 0) {
 			throw new IndexOutOfBoundsException();
@@ -226,6 +227,7 @@ public class DoublyLinkedList {
 		ogLast.getNext().setPrevious(ogLast);
 		addedLast.setNext(SENTINEL);
 		SENTINEL.setPrevious(addedLast);
+		nodeCount = nodeCount + seg.size();
 	}
 
 	// Like question 8 on the SinglyLinkedList test:
@@ -233,28 +235,85 @@ public class DoublyLinkedList {
 	// (on the test these nodes were assumed to contain CCCCCCCCGGGGGGGG, but here
 	// you do not need to assume or check for that)
 	public void removeCCCCCCCCGGGGGGGG(ListNode2<Nucleotide> nodeBefore) {
-		for (ListNode2<Nucleotide> n = SENTINEL.getNext(); n != nodeBefore; n =
-				n.getNext()) {}
+		if (contains(nodeBefore.getValue()) == (false)) {
+			System.out.println("not in the list");
+		}
+		if (nodeCount < 17) {
+			System.out.println("list too short");
+		}
+		ListNode2<Nucleotide> n = nodeBefore;
+		for (int i = 0; i <= 17; i++) {
+			if (i == 17) {
+				nodeBefore.setNext(n);
+				n.setPrevious(nodeBefore);
+			}
+			n = n.getNext();
+		}
+		nodeCount = nodeCount - 16;
 	}
 
 	// Like question 9 on the SinglyLinkedList test:
 	// You are to find and delete the first instance of seg in the list.
 	// If seg is not in the list, return false, otherwise return true.
 	public boolean deleteSegment(DoublyLinkedList seg) {
-
+		for (ListNode2<Nucleotide> n = SENTINEL.getNext(); n != SENTINEL; n = n.getNext()) {
+			if (n.getValue().equals(seg.getHead().getValue())) {
+				ListNode2<Nucleotide> current = n;
+				ListNode2<Nucleotide> m = seg.getHead();
+				ListNode2<Nucleotide> ogStart = n.getPrevious();
+				int count = 0;
+				while (current != SENTINEL && count < seg.size()
+						&& n.getValue().equals(m.getValue())) {
+					n = n.getNext();
+					m = m.getNext();
+					count++;
+				}
+				if (count == seg.size()) {
+					ogStart.setNext(n);
+					n.setPrevious(ogStart);
+					nodeCount = nodeCount - seg.size();
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	// Like question 10 on the SinglyLinkedList test:
 	// Delete the last three nodes in the list
 	// If there are not enough nodes, return false
 	public boolean deleteLastThree() {
-
+		if (nodeCount < 3) {
+			return false;
+		}
+		ListNode2<Nucleotide> n = SENTINEL.getPrevious();
+		for (int i = 0; i < 3; i++) {
+			n = n.getPrevious();
+		}
+		n.setNext(SENTINEL);
+		SENTINEL.setPrevious(n);
+		nodeCount = nodeCount - 3;
+		return true;
 	}
 
 	// Like question 11 on the SinglyLinkedList test:
 	// Replaces every node containing "A" with three nodes containing "T" "A" "C"
 	public void replaceEveryAWithTAC() {
-
+		for (ListNode2<Nucleotide> n = SENTINEL.getNext(); n != SENTINEL; n = n.getNext()) {
+			if (n.getValue().equals(Nucleotide.A)) {
+				ListNode2<Nucleotide> T = new ListNode2<Nucleotide>(Nucleotide.T);
+				ListNode2<Nucleotide> C = new ListNode2<Nucleotide>(Nucleotide.C);
+				n.getPrevious().setNext(T);
+				T.setPrevious(n.getPrevious());
+				n.setPrevious(T);
+				T.setNext(n);
+				n.getNext().setPrevious(C);
+				C.setNext(n.getNext());
+				n.setNext(C);
+				C.setPrevious(n);
+				nodeCount = nodeCount + 2;
+			}
+		}
 	}
 
 }

@@ -1,16 +1,16 @@
+
 public class DoublyLinkedListTester {
     public static void main(String[] args) {
-        DoublyLinkedList waller = new DoublyLinkedList();
-        waller.add(Nucleotide.A);
-        waller.add(Nucleotide.C);
-        waller.add(Nucleotide.G);
-        waller.add(Nucleotide.T);
+        Nucleotide[] values = new Nucleotide[6];
+        values[0] = Nucleotide.A;
+        values[1] = Nucleotide.C;
+        values[2] = Nucleotide.T;
+        values[3] = Nucleotide.G;
+        values[4] = Nucleotide.A;
+        values[5] = Nucleotide.C;
+        DoublyLinkedList waller = new DoublyLinkedList(values);;
         System.out.println(waller.toString());
-        DoublyLinkedList add = new DoublyLinkedList();
-        add.add(Nucleotide.A);
-        add.add(Nucleotide.G);
-        System.out.println(add);
-        waller.addSegmentToEnd(add);
+        waller.replaceEveryAWithTAC();;
         System.out.println(waller.toString());
     }
 }
