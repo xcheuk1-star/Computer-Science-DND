@@ -96,12 +96,15 @@ public class DoublyLinkedList {
 	// Removes the first element that is equal to obj, if any.
 	// Returns true if successful; otherwise returns false.
 	public boolean remove(Nucleotide obj) {
-		if (contains(obj)) {
-			remove(indexOf(obj));
-			return true;
-		} else {
-			return false;
+		for (ListNode2<Nucleotide> n = SENTINEL.getNext(); n != SENTINEL; n = n.getNext()) {
+			if (n.getValue().equals(obj)) {
+				n.getPrevious().setNext(n.getNext());
+				n.getNext().setPrevious(n.getPrevious());
+				nodeCount--;
+				return true;
+			}
 		}
+		return false;
 	}
 
 	// Returns the i-th element.
