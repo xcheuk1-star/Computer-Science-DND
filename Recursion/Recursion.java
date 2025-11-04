@@ -77,6 +77,9 @@ public class Recursion {
 	// For example, subsets("abc") would print out "", "a", "b", "c", "ab", "ac",
 	// "bc", "abc"
 	// Order is your choice
+	public static String addLetter(String str1, char ch) {
+		return (""+ str1 + ch);
+	}
 
 	public static void printSubsets(String str) {
 		if (str.length() == 0) {
@@ -94,8 +97,7 @@ public class Recursion {
 			System.out.println("\"" + str.charAt(0) + str.charAt(1) + "\",");
 			return;
 		}
-		printSubsets(str.substring(1));
-
+		printSubsets(str.substring(0, str.length() - 1) + str.substring(str.length()));
 	}
 
 	// List contains a single String to start.
