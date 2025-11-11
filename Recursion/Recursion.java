@@ -78,7 +78,7 @@ public class Recursion {
 	// "bc", "abc"
 	// Order is your choice
 	public static String addLetter(String str1, char ch) {
-		return (""+ str1 + ch);
+		return ("" + str1 + ch);
 	}
 
 	public static void printSubsets(String str) {
@@ -129,8 +129,25 @@ public class Recursion {
 	// The towers are number 0, 1, 2, and each move should be of
 	// the form "1 -> 2", meaning "take the top disk of tower 1 and
 	// put it on tower 2" etc.
-	public static void solveHanoi(int startingDisks) {
 
+	public static void moveDisk(int current, int destination) {
+		System.out.println(current + "-->" + destination);
+	}
+
+	public static void solveTower(int disks, int start, int end, int free) {
+		if (disks == 2) {
+			moveDisk(start, free);
+			moveDisk(start, end);
+			moveDisk(free, end);
+		} else {
+			solveTower(disks - 1, start, free, end);
+			moveDisk(start, end);
+			solveTower(disks - 1, free, end, start);
+		}
+	}
+
+	public static void solveHanoi(int startingDisks) {
+		solveTower(startingDisks, 0, 2, 1);
 	}
 
 	// You are partaking in a scavenger hunt!
@@ -152,8 +169,39 @@ public class Recursion {
 	// Then the best possible result is getting the item at time 3 and the one at
 	// time 9
 	// for a total of 20 points, so it would return 20.
-	public static int scavHunt(int[] times, int[] points) {
 
+	public static int findMaxReward(int[] times, int index, int[] points) {
+		if (index == times.length - 1) {
+			return points[index];
+		}
+		if (findNextCompatible(times, index, points) == -1) {
+			return points[index];
+		}
+		int takeIndex = points[index]
+				+ findMaxReward(times, findNextCompatible(times, index, points), points);
+		int takeNext = findMaxReward(times, index + 1, points);
+		if (takeIndex > takeNext) {
+			return takeIndex;
+		} else {
+			return takeNext;
+		}
+		// take points at index + max reward of the next compatible
+		// or go to the next one and get max reward
+		// find the bigger one and do it
+	}
+
+	public static int findNextCompatible(int[] times, int index, int[] points) {
+		int current = times[index];
+		for (int i = index; i < times.length; i++) {
+			if (times[i] > current + 4) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public static int scavHunt(int[] times, int[] points) {
+		return findMaxReward(times, 0, points);
 	}
 
 }
