@@ -4,10 +4,10 @@ public class Recursion {
 	// but in reverse
 	public static void printListInReverse(ListNode head) {
 		if (head.getNext() == null) {
-			System.out.print(head.getValue().toString() + " ");
+			System.out.println(head.getValue().toString());
 		} else {
 			printListInReverse(head.getNext());
-			System.out.print(head.getValue().toString() + " ");
+			System.out.println(head.getValue().toString());
 		}
 
 	}
@@ -22,7 +22,26 @@ public class Recursion {
 	// Trying to infect outside the confines of the grid also has no effect
 	// Precondition: grid has no null entries
 	public static void infect(String[][] grid, int r, int c) {
-
+		if (r > grid.length - 1 || r < 0 || c > grid[0].length - 1 || c < 0) {
+			throw new IndexOutOfBoundsException("Index out of bounds");
+		}
+		if (grid[r][c] == "infected" || grid[r][c] == "vaccinated") {
+			return;
+		} else {
+			grid[r][c] = "infected";
+		}
+		if (r != grid.length - 1) {
+			infect(grid, r + 1, c);
+		}
+		if (r != 0) {
+			infect(grid, r - 1, c);
+		}
+		if (c != grid[0].length - 1) {
+			infect(grid, r, c + 1);
+		}
+		if (c != 0) {
+			infect(grid, r, c - 1);
+		}
 	}
 
 	// How many subsets are there of the numbers 1...n
@@ -77,27 +96,18 @@ public class Recursion {
 	// For example, subsets("abc") would print out "", "a", "b", "c", "ab", "ac",
 	// "bc", "abc"
 	// Order is your choice
-	public static String addLetter(String str1, char ch) {
-		return ("" + str1 + ch);
+
+	public static void subsetsHelper(String str, int index, String current) {
+		if (index == str.length()) {
+			System.out.println(current);
+			return;
+		}
+		subsetsHelper(str, index + 1, current);
+		subsetsHelper(str, index + 1, current + str.charAt(index));
 	}
 
 	public static void printSubsets(String str) {
-		if (str.length() == 0) {
-			System.out.println("\"\",");
-			return;
-		}
-		if (str.length() == 1) {
-			System.out.println("\"" + str.charAt(0) + "\",");
-			return;
-		}
-		if (str.length() == 2) {
-			System.out.println("\"\",");
-			System.out.println("\"" + str.charAt(0) + "\",");
-			System.out.println("\"" + str.charAt(1) + "\",");
-			System.out.println("\"" + str.charAt(0) + str.charAt(1) + "\",");
-			return;
-		}
-		printSubsets(str.substring(0, str.length() - 1) + str.substring(str.length()));
+		subsetsHelper(str, 0, "");
 	}
 
 	// List contains a single String to start.
@@ -106,22 +116,128 @@ public class Recursion {
 	// For example, permute("abc") could print out "abc", "acb", "bac", "bca",
 	// "cab", "cba"
 	// Order is your choice
-	public static void printPermutations(String str) {
 
+	public static void permutationsHelper(String current, String left) {
+		if (left.length() == 0) {
+			System.out.println(current);
+			return;
+		}
+
+		for (int i = 0; i < left.length(); i++) {
+			char ch = left.charAt(i);
+			String newCurrent = current + ch;
+			String newLeft = left.substring(0, i) + left.substring(i + 1);
+			permutationsHelper(newCurrent, newLeft);
+		}
+	}
+
+	public static void printPermutations(String str) {
+		permutationsHelper("", str);
 	}
 
 	// Performs a mergeSort on the given array of ints
 	// Precondition: you may assume there are NO duplicates!!!
 	public static void mergeSort(int[] ints) {
+		if (ints == null) {
+			return;
+		}
+		int[] sorted = sort1(ints);
+		for (int i = 0; i < ints.length; i++) {
+			ints[i] = sorted[i];
+		}
+	}
 
+	public static int[] sort1(int[] ints) {
+		if (ints.length <= 1) {
+			return ints;
+		}
+
+		int[] firstHalf = new int[ints.length / 2];
+		for (int i = 0; i < ints.length / 2; i++) {
+			firstHalf[i] = ints[i];
+		}
+		int[] secondHalf = new int[ints.length - ints.length / 2];
+		for (int i = ints.length / 2; i < ints.length; i++) {
+			secondHalf[i - ints.length / 2] = ints[i];
+		}
+		int[] left = sort1(firstHalf);
+		int[] right = sort1(secondHalf);
+
+		return merge(left, right);
+	}
+
+	public static int[] merge(int[] p1, int[] p2) {
+		int[] merged = new int[p1.length + p2.length];
+		int i = 0;
+		int j = 0;
+		int f = 0;
+		while (i < p1.length && j < p2.length) {
+			if (p1[i] < p2[j]) {
+				merged[f] = p1[i];
+				i++;
+			} else {
+				merged[f] = p2[j];
+				j++;
+			}
+			f++;
+		}
+		while (i < p1.length) {
+			merged[f] = p1[i];
+			i++;
+			f++;
+		}
+		while (j < p2.length) {
+			merged[f] = p2[j];
+			j++;
+			f++;
+		}
+		return merged;
 	}
 
 	// Performs a quickSort on the given array of ints
 	// Use the middle element (index n/2) as the pivot
 	// Precondition: you may assume there are NO duplicates!!!
 	public static void quickSort(int[] ints) {
+		if (ints == null) {
+			return;
+		}
+		sort2(ints, 0, ints.length - 1);
+	}
+
+	public static void sort2(int[] ints, int left, int right) {
+		if (left >= right) {
+			return;
+		}
+		int index = split(ints, left, right);
+		sort2(ints, left, index - 1);
+		sort2(ints, index, right);
 
 	}
+
+	public static int split(int[] ints, int left, int right) {
+		int pivot = ints[(left + right) / 2];
+		while (left <= right) {
+			while (ints[left] < pivot) {
+				left++;
+			}
+			while (ints[right] > pivot) {
+				right--;
+			}
+			if (left <= right) {
+				int temp = ints[left];
+				ints[left] = ints[right];
+				ints[right] = temp;
+				left++;
+				right--;
+			}
+		}
+		return left;
+	}
+
+
+	// public static int[] quick(int start, int end, int[] ints) {
+	// if (start > end);
+	// }
 
 	// Prints a sequence of moves (one on each line)
 	// to complete a Towers of Hanoi problem:
@@ -131,7 +247,7 @@ public class Recursion {
 	// put it on tower 2" etc.
 
 	public static void moveDisk(int current, int destination) {
-		System.out.println(current + "-->" + destination);
+		System.out.println(current + " -> " + destination);
 	}
 
 	public static void solveTower(int disks, int start, int end, int free) {
