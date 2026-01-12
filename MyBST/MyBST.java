@@ -22,8 +22,6 @@ public class MyBST<E extends Comparable<E>> {
 		return toString().contains(value.toString());
 	}
 
-	public void reBalance()
-
 	// Adds value to this BST, unless this tree already holds value.
 	// Returns true if value has been added; otherwise returns false.
 	public boolean add(E value) {
@@ -67,14 +65,45 @@ public class MyBST<E extends Comparable<E>> {
 		return false;
 	}
 
+	public boolean removeHelper(BinaryNode<E> curr, E value) {
+		BinaryNode<E> toRemove = new BinaryNode<E>(value);
+		if (curr.isLeaf()) {
+			if (isRight()) {
+
+			}
+		}
+	}
+
+	public boolean isRight(BinaryNode<E> on) {
+		if (on.getValue().compareTo(on.getParent().getValue()) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// Returns the minimum in the tree
 	public E min() {
-		return null;
+		return minHelper(root);
+	}
+
+	public E minHelper(BinaryNode<E> curr) {
+		if (curr.getLeft() == null) {
+			return curr.getValue();
+		}
+		return minHelper(curr.getLeft());
 	}
 
 	// Returns the maximum in the tree.
 	public E max() {
-		return null;
+		return maxHelper(root);
+	}
+
+	public E maxHelper(BinaryNode<E> curr) {
+		if (curr.getRight() == null) {
+			return curr.getValue();
+		}
+		return minHelper(curr.getRight());
 	}
 
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
