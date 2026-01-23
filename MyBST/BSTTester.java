@@ -11,5 +11,8 @@ public class BSTTester {
         d.add(47);
         d.add(666);
         System.out.println(d.toString());
+        System.out.println(d.contains(667));
+        d.remove(4);
+        System.out.println(d.toString());
     }
 }

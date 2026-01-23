@@ -1,4 +1,6 @@
 // Implements a BST with BinaryNode nodes
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyBST<E extends Comparable<E>> {
 
@@ -19,7 +21,30 @@ public class MyBST<E extends Comparable<E>> {
 
 	// Returns true if this BST contains value; otherwise returns false.
 	public boolean contains(E value) {
-		return toString().contains(value.toString());
+		return containsHelper(root, value);
+	}
+
+	public boolean containsHelper(BinaryNode<E> on, E value) {
+		if (on == null) {
+			return false;
+		}
+		if (on.getValue().equals(value)) {
+			return true;
+		}
+
+		if (on.getValue().compareTo(value) > 0) {
+			if (on.getLeft() == null) {
+				return false;
+			}
+			return containsHelper(on.getLeft(), value);
+		}
+		if (on.getValue().compareTo(value) < 0) {
+			if (on.getRight() == null) {
+				return false;
+			}
+			return containsHelper(on.getRight(), value);
+		}
+		return false;
 	}
 
 	// Adds value to this BST, unless this tree already holds value.
@@ -28,12 +53,14 @@ public class MyBST<E extends Comparable<E>> {
 		BinaryNode<E> toAdd = new BinaryNode<E>(value);
 		if (root == null) {
 			root = toAdd;
+			return true;
 		}
 		if (this.contains(value)) {
 			return false;
+		} else {
+			addHelper(root, toAdd);
+			return true;
 		}
-		addHelper(root, toAdd);
-		return true;
 	}
 
 	public void addHelper(BinaryNode<E> curr, BinaryNode<E> toAdd) {
@@ -62,34 +89,83 @@ public class MyBST<E extends Comparable<E>> {
 	// If removing a node with two children: replace it with the
 	// largest node in the right subtree
 	public boolean remove(E value) {
-		return false;
-	}
-
-	public boolean removeHelper(BinaryNode<E> curr, E value) {
-		BinaryNode<E> toRemove = new BinaryNode<E>(value);
-		if (curr.isLeaf()) {
-			if (isRight()) {
-
-			}
-		}
-	}
-
-	public boolean isRight(BinaryNode<E> on) {
-		if (on.getValue().compareTo(on.getParent().getValue()) > 0) {
-			return true;
-		} else {
+		if (value == null) {
 			return false;
+		}
+
+		BinaryNode<E> toRemove = findNode(root, value);
+		if (toRemove == null) {
+			return false;
+		}
+		removeNode(toRemove);
+		return true;
+	}
+
+	public BinaryNode<E> findNode(BinaryNode<E> curr, E value) {
+		if (curr == null) {
+			return null;
+		}
+
+		if (value.compareTo(curr.getValue()) == 0) {
+			return curr;
+		}
+
+		if (value.compareTo(curr.getValue()) < 0) {
+			return findNode(curr.getLeft(), value);
+		}
+
+		if (value.compareTo(curr.getValue()) > 0) {
+			return findNode(curr.getRight(), value);
+		}
+
+		return null;
+	}
+
+	public void removeNode(BinaryNode<E> node) {
+		if (node.isLeaf()) {
+			replace(node, null);
+			return;
+		}
+
+		if (node.getLeft() == null) {
+			replace(node, node.getRight());
+			return;
+		}
+
+		if (node.getRight() == null) {
+			replace(node, node.getLeft());
+			return;
+		}
+
+		BinaryNode<E> next = minHelper(node.getRight());
+		node.setValue(next.getValue());
+		replace(next, next.getRight());
+	}
+
+	public void replace(BinaryNode<E> node, BinaryNode<E> newChild) {
+		BinaryNode<E> p = node.getParent();
+		if (newChild != null) {
+			newChild.setParent(p);
+		}
+		if (p == null) {
+			root = newChild;
+			return;
+		}
+		if (p.getLeft() == node) {
+			p.setLeft(newChild);
+		} else {
+			p.setRight(newChild);
 		}
 	}
 
 	// Returns the minimum in the tree
 	public E min() {
-		return minHelper(root);
+		return minHelper(root).getValue();
 	}
 
-	public E minHelper(BinaryNode<E> curr) {
+	public BinaryNode<E> minHelper(BinaryNode<E> curr) {
 		if (curr.getLeft() == null) {
-			return curr.getValue();
+			return curr;
 		}
 		return minHelper(curr.getLeft());
 	}
@@ -103,7 +179,7 @@ public class MyBST<E extends Comparable<E>> {
 		if (curr.getRight() == null) {
 			return curr.getValue();
 		}
-		return minHelper(curr.getRight());
+		return maxHelper(curr.getRight());
 	}
 
 	// Returns a bracket-surrounded, comma separated list of the contents of the nodes, in order
