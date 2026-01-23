@@ -21,28 +21,71 @@ public class Arithmetic {
     public static String convertClassicToStout(String exp) {
         MyStack<Character> ops = new MyStack<Character>();
         char[] eq = exp.toCharArray();
-        ArrayList<Character> stout = new ArrayList<Character>();
+        StringBuilder stout = new StringBuilder();
+        String rank = "(^*%/+-)";
         for (int i = 0; i < eq.length; i++) {
             char on = eq[i];
-            if (on != ' ') {
-                if ((int) on < 48 || (int) on > 57) {
-                    if (rank.indexOf(on) > 0) {
-                        stout.add(on);
-                    }
-                } else {
+            if (rank.indexOf(on) == -1) {
+                stout.append(on);
+            } else {
+                if (ops.peek() == null) {
                     ops.push(on);
+                } else if (compareOps(on, ops.peek()) == true) {
+                    ops.push(on);
+                } else {
+                    while (ops.isEmpty() == false && compareOps(on, ops.peek()) == false) {
+                        if (ops.peek() != '(' || ops.peek() != ')') {
+                            stout.append(ops.peek());
+                            ops.pop();
+                        } else {
+                            ops.pop();
+                        }
+                    }
+                    if (on != '(' || on != ')') {
+                        stout.append(on);
+                    }
                 }
             }
         }
+        return stout + "";
     }
 
-    public boolean compareOps(char on, char stacked) {
-        String rank = "^*%/+-";
-        if (rank.indexOf(on) == 0 && rank.indexOf(stacked) > 0) {
-            return true;
+
+    public static boolean compareOps(char on, char stacked) {
+        int a = 0;
+        int b = 0;
+        String rank = "(^*%/+-)";
+        if (rank.indexOf(on) == 0) {
+            a = 5;
         }
-        if (rank.indexOf(on) > 0 && rank.indexOf(on) < 4 && rank.indexOf(stacked) < 3) {
+        if (rank.indexOf(stacked) == 0) {
+            b = 5;
+        }
+        if (rank.indexOf(on) == 1) {
+            a = 4;
+        }
+        if (rank.indexOf(stacked) == 1) {
+            b = 4;
+        }
+        if (rank.indexOf(on) > 1 && rank.indexOf(on) < 5) {
+            a = 3;
+        }
+        if (rank.indexOf(stacked) > 1 && rank.indexOf(stacked) < 5) {
+            b = 3;
+        }
+        if (rank.indexOf(on) > 4 && rank.indexOf(on) < 7) {
+            a = 2;
+        }
+        if (rank.indexOf(stacked) > 4 && rank.indexOf(stacked) < 7) {
+            b = 2;
+        } else {
+            a = 1;
+            b = 1;
+        }
+        if (a <= b) {
             return false;
+        } else {
+            return true;
         }
     }
 }
