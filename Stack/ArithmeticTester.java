@@ -1,7 +1,10 @@
 public class ArithmeticTester {
     public static void main(String[] args) {
-        String wallerisGae = "6*7+(4-1)";
-        System.out.println(wallerisGae);
-        System.out.println(Arithmetic.convertClassicToStout(wallerisGae));
+        String waller = "-100 + (2 * 3 - 4)";
+        System.out.println(waller);
+        System.out.println(Arithmetic.convertClassicToStout(waller));
+        String converted = Arithmetic.convertClassicToStout(waller);
+        System.out.println(Arithmetic.evaluateStout(converted));
+        System.out.println(Arithmetic.evaluate(waller));
     }
 }

@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MyStackTester",
+            "request": "launch",
+            "mainClass": "MyStackTester",
+            "projectName": "Stack_d2706326"
+        },
+        {
+            "type": "java",
+            "name": "ArithmeticTester",
+            "request": "launch",
+            "mainClass": "ArithmeticTester",
+            "projectName": "Stack_d2706326"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
