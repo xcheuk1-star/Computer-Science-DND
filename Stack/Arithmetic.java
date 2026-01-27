@@ -106,6 +106,7 @@ public class Arithmetic {
                     if (!ops.isEmpty() && ops.peek() == '(') {
                         ops.pop();
                     }
+                    continue;
                 }
                 if (compareOps(on, ops.peek()) == true || on == '(') {
                     ops.push(on);
@@ -127,7 +128,7 @@ public class Arithmetic {
 
         while (ops.isEmpty() == false) {
             if (ops.peek() != '(' && ops.peek() != ')') {
-                stout.append(ops.pop());
+                stout.append(" " + ops.pop() + " ");
             } else {
                 ops.pop();
             }
