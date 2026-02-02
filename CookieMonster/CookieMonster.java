@@ -95,9 +95,31 @@ public class CookieMonster {
 	 */
 	/* From any given position, always add the path right before adding the path down */
 	public int queueCookies() {
-		// CODE THIS
-		return 0;
+		int total = 0;
+		Queue<OrphanScout> jail = new LinkedList<OrphanScout>();
+		OrphanScout waller = new OrphanScout(0, 0, 0);
+		jail.offer(waller);
+		while (!jail.isEmpty()) {
+			OrphanScout curr = jail.poll();
+			int row = curr.getEndingRow();
+			int col = curr.getEndingCol();
+			if (validPoint(row, col + 1)) {
+				OrphanScout next = new OrphanScout(row, col + 1,
+						curr.getCookiesDiscovered() + cookieGrid[row][col + 1]);
+				jail.offer(next);
+			}
+			if (validPoint(row + 1, col)) {
+				OrphanScout next = new OrphanScout(row + 1, col,
+						curr.getCookiesDiscovered() + cookieGrid[row + 1][col]);
+				jail.offer(next);
+			}
+			if (curr.getCookiesDiscovered() > total) {
+				total = curr.getCookiesDiscovered();
+			}
+		}
+		return total + cookieGrid[0][0];
 	}
+
 
 
 	/*
@@ -108,8 +130,27 @@ public class CookieMonster {
 	public int stackCookies() {
 		int total = 0;
 		Stack<OrphanScout> jail = new Stack<OrphanScout>();
-		OrphanScout waller = new OrphanScout(0, 0, cookieGrid[0][0]);
-		return 0;
+		OrphanScout waller = new OrphanScout(0, 0, 0);
+		jail.push(waller);
+		while (!jail.isEmpty()) {
+			OrphanScout curr = jail.pop();
+			int row = curr.getEndingRow();
+			int col = curr.getEndingCol();
+			if (validPoint(row, col + 1)) {
+				OrphanScout next = new OrphanScout(row, col + 1,
+						curr.getCookiesDiscovered() + cookieGrid[row][col + 1]);
+				jail.push(next);
+			}
+			if (validPoint(row + 1, col)) {
+				OrphanScout next = new OrphanScout(row + 1, col,
+						curr.getCookiesDiscovered() + cookieGrid[row + 1][col]);
+				jail.push(next);
+			}
+			if (curr.getCookiesDiscovered() > total) {
+				total = curr.getCookiesDiscovered();
+			}
+		}
+		return total + cookieGrid[0][0];
 	}
 
 }
