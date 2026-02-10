@@ -71,7 +71,7 @@ public class CookieMonster {
 	// cookieGrid[row][col]
 	public int recursiveCookies(int row, int col) {
 		if (validPoint(row, col) == false) {
-			throw new IndexOutOfBoundsException();
+			return 0;
 		}
 		if (row == numRows - 1 && col == numCols - 1) {
 			return cookieGrid[row][col];
@@ -95,6 +95,9 @@ public class CookieMonster {
 	 */
 	/* From any given position, always add the path right before adding the path down */
 	public int queueCookies() {
+		if (validPoint(0, 0) == false) {
+			return 0;
+		}
 		int total = 0;
 		Queue<OrphanScout> jail = new LinkedList<OrphanScout>();
 		OrphanScout waller = new OrphanScout(0, 0, 0);
@@ -128,6 +131,9 @@ public class CookieMonster {
 	 */
 	/* From any given position, always add the path right before adding the path down */
 	public int stackCookies() {
+		if (validPoint(0, 0) == false) {
+			return 0;
+		}
 		int total = 0;
 		Stack<OrphanScout> jail = new Stack<OrphanScout>();
 		OrphanScout waller = new OrphanScout(0, 0, 0);
