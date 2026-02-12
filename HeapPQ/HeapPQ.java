@@ -65,7 +65,17 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Returns the index of the *smaller child* of index i
 	private int smallerChild(int i) {
-		return Math.min(i * 2 + 1, i * 2 + 2);
+		if ((i * 2 + 1) > objectCount - 1 && (i * 2 + 2) > objectCount - 1) {
+			return -1;
+		}
+		if ((i * 2 + 2) > objectCount - 1) {
+			return i * 2 + 1;
+		}
+		if ((int) heap[i * 2 + 1] < (int) heap[i * 2 + 2]) {
+			return i * 2 + 1;
+		} else {
+			return i * 2 + 2;
+		}
 	}
 
 	// Swaps the contents of indices i and j
@@ -77,6 +87,10 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i upwards until the heap properties hold again.
 	private void bubbleUp(int i) {
+		// add
+		if (i == 0) {
+			return;
+		}
 		if (heap[i].compareTo(heap[parent(i)]) >= 0) {
 			return;
 		} else {
@@ -87,31 +101,50 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
-
+		// remove
+		if (i == objectCount - 1) {
+			return;
+		}
+		if (heap[i].compareTo(heap[smallerChild(i)]) <= 0) {
+			return;
+		} else {
+			swap(i, smallerChild(i));
+			bubbleDown(smallerChild(i));
+		}
 	}
 
 	@Override
 	public void add(E obj) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'add'");
+		if (objectCount == heap.length) {
+			increaseCapacity();
+		}
+		heap[objectCount] = obj;
+		objectCount++;
+		bubbleUp(objectCount - 1);
 	}
 
 	@Override
 	public E removeMin() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'removeMin'");
+		E min = peek();
+		swap(0, objectCount - 1);
+		heap[objectCount - 1] = null;
+		objectCount--;
+		bubbleDown(0);
+		return min;
 	}
 
 	@Override
 	public E peek() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'peek'");
+		return heap[0];
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+		if (objectCount == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
