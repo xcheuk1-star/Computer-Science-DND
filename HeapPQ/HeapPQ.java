@@ -1,4 +1,3 @@
-
 public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	private E[] heap;
@@ -71,7 +70,7 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 		if ((i * 2 + 2) > objectCount - 1) {
 			return i * 2 + 1;
 		}
-		if ((int) heap[i * 2 + 1] < (int) heap[i * 2 + 2]) {
+		if (heap[i * 2 + 1].compareTo(heap[i * 2 + 2]) <= 0) {
 			return i * 2 + 1;
 		} else {
 			return i * 2 + 2;
@@ -102,19 +101,23 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 	// Bubbles the element at index i downwards until the heap properties hold again.
 	private void bubbleDown(int i) {
 		// remove
-		if (i == objectCount - 1) {
+		int child = smallerChild(i);
+		if (child == -1) {
 			return;
 		}
-		if (heap[i].compareTo(heap[smallerChild(i)]) <= 0) {
+		if (heap[i].compareTo(heap[child]) <= 0) {
 			return;
 		} else {
-			swap(i, smallerChild(i));
-			bubbleDown(smallerChild(i));
+			swap(i, child);
+			bubbleDown(child);
 		}
 	}
 
 	@Override
 	public void add(E obj) {
+		if (obj == null) {
+			throw new NullPointerException();
+		}
 		if (objectCount == heap.length) {
 			increaseCapacity();
 		}
@@ -125,6 +128,9 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	@Override
 	public E removeMin() {
+		if (isEmpty()) {
+			throw new NullPointerException();
+		}
 		E min = peek();
 		swap(0, objectCount - 1);
 		heap[objectCount - 1] = null;
@@ -135,6 +141,9 @@ public class HeapPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
 
 	@Override
 	public E peek() {
+		if (isEmpty()) {
+			throw new NullPointerException();
+		}
 		return heap[0];
 	}
 
