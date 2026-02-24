@@ -128,6 +128,12 @@ public class MyPQ<E extends Comparable<E>> implements MyPriorityQueue<E> {
         if (isEmpty()) {
             throw new NullPointerException();
         }
+        if (objectCount == 1) {
+            E toReturn = heap[0];
+            heap[0] = null;
+            objectCount = 0;
+            return toReturn;
+        }
         E min = peek();
         swap(0, objectCount - 1);
         heap[objectCount - 1] = null;
