@@ -32,5 +32,6 @@ public class ChocolateHashMapTester {
     inventory.currentLoadFactor();
     inventory.get(k1);
     inventory.containsValue((b1));
+    inventory.remove(k1);
   }
 }

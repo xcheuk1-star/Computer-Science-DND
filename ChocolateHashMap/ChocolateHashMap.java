@@ -50,17 +50,24 @@ public class ChocolateHashMap<K, V> {
     // Use .hashCode(), but be aware that hashCode can return negative numbers!
     // NOTE: Math.abs(Integer.MIN_VALUE) is still negative. Consider masking the sign bit.
     private int whichBucket(K key) {
-        return ((key.hashCode() % buckets.length + buckets.length) / 2);
+        int r = key.hashCode() % buckets.length;
+        if (r < 0) {
+            r += buckets.length;
+        }
+        return r;
     }
 
     // Returns the current load factor (objCount / buckets)
     public double currentLoadFactor() {
-        return (double) objectCount / buckets.length;
+        return ((double) objectCount) / ((double) buckets.length);
     }
 
     // Return true if the key exists as a key in the map, otherwise false.
     // Use the .equals method to check equality.
     public boolean containsKey(K key) {
+        if (key == null) {
+            return true;
+        }
         BatchNode batchnode = buckets[whichBucket(key)];
         if (batchnode.getNext().isSentinel()) {
             return false;
@@ -78,6 +85,9 @@ public class ChocolateHashMap<K, V> {
     // Return true if the value exists as a value in the map, otherwise false.
     // Use the .equals method to check equality.
     public boolean containsValue(V value) {
+        if (value == null) {
+            return true;
+        }
         for (int i = 0; i < buckets.length; i++) {
             BatchNode batchnode = buckets[i];
             for (BatchNode b = batchnode.getNext(); !b.isSentinel(); b = b.getNext()) {
@@ -160,11 +170,18 @@ public class ChocolateHashMap<K, V> {
                 (BatchNode<ChocolateEntry<K, V>>[]) new BatchNode[newBucketCount];
         fillArrayWithSentinels(newBuckets);
         for (int i = 0; i < j; i++) {
-            BatchNode batchnode = buckets[i];
-            for (BatchNode b = batchnode.getNext(); !b.isSentinel(); b = b.getNext()) {
+            BatchNode sentinel = buckets[i];
+            BatchNode b = sentinel.getNext();
+            while (!b.isSentinel()) {
+                BatchNode next = b.getNext();
                 ChocolateEntry thisEntry = (ChocolateEntry) b.getEntry();
-                int place = (thisEntry.getKey().hashCode() % newBucketCount + newBucketCount) / 2;
-                newBuckets[place] = b;
+                int r = thisEntry.getKey().hashCode() % newBucketCount;
+                if (r < 0) {
+                    r += newBucketCount;
+                }
+                b.unlink();
+                newBuckets[r].insertBefore(b);
+                b = next;
             }
         }
         buckets = newBuckets;
