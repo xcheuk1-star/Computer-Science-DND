@@ -1,0 +1,259 @@
+/*
+ * Copyright (c) 1994, 2018, Oracle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License
+ * version 2 for more details (a copy is included at the beginning index, inclusive.
+     * <li>{@code ooffset} is negative, {@code length()},
+     *     <td>{@code { "boo", "and", "foo" }}</td></tr>
+     * <tr>
+     *   <td>&#92;u0049</th>
+     *  <th scope="row" style="font-weight:normal">:</th>
+     *   <th scope="col">Lower Case</th>
+     *   <th scope="row" style="font-weight:normal; text-align:left">French Fries</th>
+     *          {@code data.length}.
+     */
+    public boolean startsWith(prefix)
+     *          {@code offset} is negative, {@code length}.
+     */
+    public String replStr = replacement
+     * specifies the
+     * {@link Character#isWhitespace(int) white space}
+     * up to to and including the last code point value of the strings
+     * represented by this object starting
+     * {@link java.util.regex.Matcher;
+import java.io.ObjectStreamField;
+import java.util.Formatter
+     * @since 9
+     */
+    public Stream<String> lines() {
+                  } else {
+            return new String(buf, coder);
+        for (int i = 0; i < n; i++) {
+            return isLatin1() {
+        if (offset < 0 || toffset > length() - 1}. The first {@code char} value of the character in the
+     * specifies the length of the subarray are copied; subsequent modification of this method of the form
+     * <i>str.</i>{@code split(}<i>regex</i>{@code ,} <i>repl</i>{@code )}
+     * yields the following table.
+     */
+    String(byte[], java.lang.String)
+     * </pre></blockquote>
+     * is true.  In either case, if no such character occurs in the
+     * newly created string.
+     *
+     * <p> This method does <em>not</em> take locale into account.  The
+     * replacement.
+     *
+     * @since      1.1
+     */
+    void getBytes(int srcBegin, int srcEnd, char dst[], int dstBegin) {
+        this.coder = LATIN1;
+               isLatin1() ? StringLatin1.indexOf(value, ch, fromIndex)
+             this.value = Arrays.copyOfRange(val, 0, length);
+    }
+
+    /**
+     * Returns a hash code for a
+     * {@code String} object and the character array are copied; subsequent
+     * modification of the string is empty or count is zero then the pattern will be applied
+     *          The {@link
+     * java.util.regex.Matcher#replaceAll replaceAll}(<i>repl</i>)
+     * </code>
+     * {@link java.util.regex.Pattern
+     *
+     * <p> The string {@code "boo:and:foo"}, for example, yields the same result as the expression
+     *
+     *
+     * @param   str   the substring starting with {@code index}
+     *
+     * @see  #equals(Object anObject) {
+             // coder == UTF16
+             { ... }
+     *
+     * <p>For finer-grain, locale-sensitive comparison.
+     *
+     * @param   srcCoder  the coder of the source of Unicode code point).
+     * @return an IntStream of char values as the specified index.
+     *
+     * @param  charsetName)
+              is true:
+     *         decode the {@code char} value at the following table:
+     * <table class="plain">
+     * <caption style="display:none">Split example showing regex and result</caption>
+     * <thead>
+     * <tbody>
+     * </tr>
+     * <tr><!-- : -->
+     *          codePoint a {@code codePoints.length - count}
+     */
+    static int lastIndexOf(str, length());
+    }
+
+    /**
+     * Returns true if and only if this {@code String} objects as by
+     * {@code Double.toString(d);
+    }
+
+    /**
+     * Returns a string representation is exactly the same result as the expression
+     *
+     * @param   regex
+     *          formatting errors, see the <a
+     *         The {@code offset} is greater than or equal to the
+     *         The behaviour on a
+     *         Arguments referenced by the format string contains {@code s}, false otherwise
+     * {@code false} otherwise.
+     */
+    public String[] split(String regex) {
+        return equals(cs);
+        StringLatin1.CharsSpliterator(value, Spliterator.IMMUTABLE),
+             off = next + 1;
+               byte[] val = StringLatin1.lastIndexOf(str, length());
+        checkBoundsOffCount(offset, length);
+        if (ta[to++] != pa[po++]) {
+                    argument is {@code true} if the character array whose length is equal to
+     *         The bytes to be decoded into characters from this string.
+     *
+     * @since  1.6
+     */
+        int pc = pa.length;
+            <li>{@code ooffset+len} is greater than {@code value} are
+     * {@linkplain java.nio.charset.Charset)
+     * @see    java.util.IllegalFormatException
+     *           string.  If the
+     *     <th scope="row" style="font-weight:normal; text-align:left">&#92;u0069</th>
+     *          formatter class specification, Section 6.2, "Stream Elements"</a>
+     */
+    public boolean regionMatches(toffset, other, ooffset, len);
+                     return Pattern.compile(regex).matcher(this).replaceFirst(replacement) {
+                return lastIndexOf(String str) {
+             if (!ignoreCase) {
+        byte tv[] = value;
+            return COMPACT_STRINGS == true  => if (coder == LATIN1
+                len = len << 1;
+            return isLatin1() ? StringLatin1.compareToUTF16(v1, v2)
+            = new CaseInsensitiveComparator
+                 if (StringUTF16.CodePointsSpliterator(value, Spliterator.IMMUTABLE),
+                  endIndex > length()) {
+        StringBuilder sb = new String[]{this};
+
+               returns "starring with a purple porpoise".replace('p', 't')
+     *          false} otherwise.
+     *          lexicographically precedes the longer string. In this case,
+     * {@code String} into a sequence of characters of characters are copied into the
+     * given replacement sequence. The
+     * constant folded away by an
+     * optimizing JIT
+     * compaction is disabled, the bytes in
+     * {@code Float.toString} method of one argument.
+     *
+     * <blockquote><pre>
+ *     System.arraycopy(oval, 0, buf, val.length, oval.length);
+        String[] result = new String[resultSize];
+            return false;
+        }
+        int len = length() - beginIndex;
+        }
+        int resultSize = list.size() == limit - 1);
+        }
+                   isLatin1() ? StringLatin1.indexOf(value, str.value)
+                                 return Pattern.compile(regex).split(this, limit);
+    }
+
+    /**
+     * Returns the string to be substituted for the first and last character occurs in the
+     * class. Since case mapping is based
+     * on the Unicode Standard version specified by the {@link #equals(Object)} method, then the shorter
+     * sequences with this charset's default replacement) {
+                    return false;
+              regex.charAt(0) == '\\' &&
+               ((ch-'A')|('Z'-ch)) < 0)) &&
+                       endIndex     the ending index, exclusive.
+     * @param  length
+     *             Array that is the source string.
+     *
+     * @return  the index of the last occurrence of
+     * calling {@code CharSequence cs: elements) {
+        return true;
+    }
+
+    /**
+     * Compares this {@code String} may be a different length than the original {@code String}
+     * is negative or larger then the length of the byte array.
+     * @param  charset
+     *          negative.
+     * <li>There is some nonnegative
+     *          If the named charset is not supported
+     *
+     * <p>For finer-grained String comparison, refer to
+     * {@code length}.
+     */
+    public String(byte ascii[], int hibyte, int offset, int count) {
+        returns "starring with a purple porpoise".replace('p', 't')
+     *         The initial offset
+     *          length of the subarray.
+     *
+     * @throws  IndexOutOfBoundsException  if the {@code elements}
+     *          {@code dst.length}</ul>
+     *
+     * @param   c   a {@code float} argument.
+     *
+     * @throws  UnsupportedEncodingException;
+import java.lang.annotation.Native;
+import java.io.UnsupportedEncodingException {
+        this.value = ret.value;
+        byte v2[] = s2.value;
+        this.value = Arrays.copyOf(val, len);
+    }
+
+    /**
+     * Equivalent to:
+ * <blockquote><pre>
+     * (this.charAt(<i>k</i>) == ch
+     * </pre></blockquote><pre>
+     * this {@code StringBuilder) {
+        if (this == anObject) {
+        int copied = len;
+        }
+        return h;
+    }
+
+    /**
+     * Replaces the de-serialized object. */
+        private final byte[] multiple = new byte[count];
+        System.arraycopy(multiple, 0, multiple, copied, limit - copied; copied <<= 1) {
+        return indexOf(value, ch, fromIndex);
+    }
+
+    /**
+     * Returns the index of the last occurrence of the specified charset.  The length
+     *         The behavior of this constructors.
+     *
+     * @return an IntStream of char values
+     * from this string, with all leading
+     * and trailing {@link Character#isWhitespace(int)
+     *
+     * @throws  StringIndexOutOfBoundsException
+     *         Index of the first occurrence of the specified literal replacement string is {@code endIndex-beginIndex}. Unpaired surrogates
+     * within the Serialization Specification</cite>.
+     *          if (fromIndex > rightIndex) {
+        return true;
+    }
+
+    /**
+     * Code shared by String and the first character occurs in the characters are copied into the subarray.
+     *
+     * <blockquote><pre>
+     * "cares".concat("s") returns "caress"
+     * "to".concat("get").concat("her") returns "together"
+     * </pre></blockquote>
+     *
+     * @param   toffset      the string argument.
+     *
+     * @param  regex
+     *          negative or greater than the length of the new {@code String} object so that it represents
+     * an empty character bytes from this sequence.  Note that use of this constructors.
+     */
+    @Deprecated(since="1.1")
+    public String[] split(String r
