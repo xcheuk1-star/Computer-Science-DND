@@ -36,7 +36,7 @@ public class HuffmanDecoder {
                 return ((char) i);
             }
         }
-        return null;
+        return ' ';
     }
 
     public void decodeFileFromHuffmanCodes(String encodedFile, String decodedFile)
@@ -46,17 +46,23 @@ public class HuffmanDecoder {
         String encoded = "";
         int num;
         while ((num = br.read()) != -1) {
-            encoded = encoded + "";
+            encoded = encoded + (char) num;
         }
+        System.out.println(encoded);
         String s = "";
         for (int i = 0; i < encoded.length(); i++) {
             s = s + encoded.charAt(i);
             if (isCode(s)) {
-                bw.write(decodeChar(s));
-                s = "";
+                if (decodeChar(s) == (char) 26) {
+                    return;
+                } else {
+                    bw.write(decodeChar(s));
+                    s = "";
+                }
             }
-            if ((char) s == (char) 26)
         }
+        br.close();
+        bw.close();
     }
 
 }
